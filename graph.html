@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph</title>
+    <script>
+        class Graph{
+            constructor(){
+                this.data={}
+            }
+            //create vertex
+            addVertex(vertex){
+                if(!this.data[vertex]){
+                    this.data[vertex]=[];
+                }
+            }
+            //create edge
+            addEdge(v1,v2){
+                if(!this.data[v1]){
+                    this.data[v1]=[];
+                }
+                if(!this.data[v2]){
+                    this.data[v2]=[];
+                }
+                this.data[v1].push(v2);
+                this.data[v2].push(v1);
+            }
+            //remove edge
+            removeEdge(v1,v2){
+                if(!this.data[v1]){
+                    return ;
+                }
+                if(!this.data[v2]){
+                    return ;
+                }
+                this.data[v1]=this.data[v1].filter((item)=> item!==v2);
+                this.data[v2]=this.data[v2].filter((item)=> item!==v1);
+            }
+            //remove vertex
+            removeVertex(vertex){
+                if(!this.data[vertex]){
+                    return ;
+                }
+                for(let i of this.data[vertex]){
+                    this.removeEdge(vertex,i);
+                }
+                delete this.data[vertex];
+            }
+        }
+        let graph = new Graph();
+        graph.addVertex('A');
+        graph.addVertex('B');
+        graph.addVertex('C');
+        graph.addVertex('D');
+        graph.addEdge('A','B');
+        graph.addEdge('A', 'C');
+        graph.addEdge('B','C');
+        graph.addEdge('B','D');
+        graph.addEdge('C','D');
+        graph.removeEdge('C','D');
+        graph.removeVertex('D');
+
+        console.warn(graph.data);
+    </script>
+</head>
+<body>
+    <h1 style="text-align: center;">Graph</h1>
+</body>
+</html>
